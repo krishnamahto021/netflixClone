@@ -5,16 +5,15 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv").config();
 
 module.exports.signUp = async (req, res) => {
-  const { name, email, password } = req.body;
+  const {  email, password } = req.body;
   const user = await User.findOne({ email });
   if (user) {
-    const { _id, name, email, token } = user;
+    const { _id,  email, token } = user;
     res.status(200).json({
       message: "User already Exists",
     });
   } else {
     const newUser = await User.create({
-      name,
       email,
       password,
       token: crypto.randomBytes(16).toString("hex"),
