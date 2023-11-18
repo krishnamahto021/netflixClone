@@ -54,7 +54,7 @@ const NavBar = () => {
 
         {loggedInUser.jwtToken ? (
           <>
-            <div className="rightContainer hidden md:flex md:items-center md:gap-6 ">
+            <div className="rightContainer hidden md:flex md:items-center md:gap-6 mr-4">
               {searchShow ? (
                 <>
                   <input
@@ -105,7 +105,7 @@ const NavBar = () => {
             </>
           </>
         ) : (
-          <div className="rightContainer text-white bg-red-600  p-2  rounded-md text-lg md:text-xl">
+          <div className="rightContainer text-white bg-red-600  p-2  rounded-md mr-1 md:mr-0 ">
             <Link to={"/sign-in"}>Sign In</Link>
           </div>
         )}
