@@ -1,18 +1,29 @@
 import React, { useDebugValue, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { getGenres } from "../redux/reducer/movieReducer";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getGenres,
+  getTrending,
+  movieSelector,
+} from "../redux/reducer/movieReducer";
 import homeImage from "../assets/home.jpg";
 import homeTitle from "../assets/homeTitle.webp";
 import { FaPlay } from "react-icons/fa";
 import { CiCircleInfo } from "react-icons/ci";
 import { Link } from "react-router-dom";
-import { authorizeUser } from "../redux/reducer/userReducer";
 const Home = () => {
   const dispatch = useDispatch();
+
+  const { genresLoaded, trendingMovies } = useSelector(movieSelector);
+
   useEffect(() => {
     dispatch(getGenres());
   }, []);
-
+  useEffect(() => {
+    if (genresLoaded) {
+      dispatch(getTrending({ type: "all" }));
+    }
+  }, [genresLoaded]);
+  console.log(trendingMovies);
   return (
     <>
       <div
