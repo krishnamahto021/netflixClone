@@ -28,11 +28,10 @@ const createArrayFromRawData = (resArray, moviesArray, genres) => {
 const getRawData = async (api, genres, paging) => {
   const moviesArray = [];
   for (let i = 1; moviesArray.length < 60 && i < 10; i++) {
-   const {data} = await axios.get(`${api}${paging ? `&page=${i}` : ""}`);
-      createArrayFromRawData(data.results, moviesArray, genres);
-      return moviesArray;
+    const { data } = await axios.get(`${api}${paging ? `&page=${i}` : ""}`);
+    createArrayFromRawData(data.results, moviesArray, genres);
   }
-
+  return moviesArray;
 };
 
 export const getGenres = createAsyncThunk("netflix/genres", async () => {

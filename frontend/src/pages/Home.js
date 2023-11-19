@@ -10,6 +10,7 @@ import homeTitle from "../assets/homeTitle.webp";
 import { FaPlay } from "react-icons/fa";
 import { CiCircleInfo } from "react-icons/ci";
 import { Link } from "react-router-dom";
+import Slider from "../components/Slider";
 const Home = () => {
   const dispatch = useDispatch();
 
@@ -23,7 +24,6 @@ const Home = () => {
       dispatch(getTrending({ type: "all" }));
     }
   }, [genresLoaded]);
-  console.log(trendingMovies);
   return (
     <>
       <div
@@ -46,6 +46,7 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <Slider movies={trendingMovies} />
     </>
   );
 };

@@ -21,7 +21,7 @@ const NavBar = () => {
 
   return (
     <>
-      <nav className="flex fixed w-screen  bg-black h-14 p-0 md:p-2 items-center justify-between ">
+      <nav className="flex fixed w-screen  bg-black h-14 p-0 md:p-2 items-center justify-between z-20">
         <div className="menuImageContainer flex text-white items-center gap-6">
           <Link to={"/"}>
             <img src={logo} alt="netflix" className="w-28"></img>
