@@ -15,13 +15,11 @@ const Card = ({ movie }) => {
     setIsHovered(false);
   };
 
-  // id ,name,image,genre(array)
-
   return (
     <div
-      className="m-1 relative group"
-      // onMouseEnter={handleMouseEnter}
-      // onMouseLeave={handleMouseLeave}
+      className="slideContainer m-1 relative cursor-pointer "
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <img
         src={`https://image.tmdb.org/t/p/w500${movie.image}`}
@@ -30,24 +28,30 @@ const Card = ({ movie }) => {
       />
 
       {isHovered && (
-        <div className="hoveredContainer w-full h-full z-10 absolute top-0 p-2 bg-gray-950 scale-x-100 rounded-md flex flex-col gap-2 overflow-hidden justify-evenly">
-          <img
-            src={`https://image.tmdb.org/t/p/w500${movie.image}`}
-            alt={movie.name}
-            className="w-full h-1/2 object-cover rounded-sm "
-          ></img>
-          <p className="title text-lg font-semibold text-red-600 text-center">
+        <div
+          className="hoveredContainer absolute w-full h-full   rounded-md top-0  z-40 flex flex-col gap-2 justify-evenly"
+          style={{
+            backgroundImage: `url(${movie.image})`,
+            backdropFilter: "blur(10px)",
+          }}
+        >
+          <p className="title text-lg font-semibold text-red-600 text-center  overflow-hidden">
             {movie.name}
           </p>
           <div className="buttonsContainer flex gap-4 items-center justify-evenly text-white text-lg ">
-            <FaRegPlayCircle className="text-2xl cursor-pointer" />
-            <AiOutlineLike className="text-2xl cursor-pointer" />
-            <AiOutlineDislike className="text-2xl cursor-pointer" />
-            <MdOutlinePlaylistAdd className="text-2xl cursor-pointer" />
+            <FaRegPlayCircle className="text-2xl  cursor-pointer  hover:scale-150 duration-300" />
+            <AiOutlineLike className="text-2xl cursor-pointer hover:scale-150 duration-300" />
+            <AiOutlineDislike className="text-2xl cursor-pointer hover:scale-150 duration-300" />
+            <MdOutlinePlaylistAdd className="text-2xl cursor-pointer hover:scale-150 duration-300" />
           </div>
-          <div className="">
-            {movie.genres.map((mg) => (
-              <span className="text-white">{mg}</span>
+          <div className="flex gap-2 items-center content-evenly ml-3">
+            {movie.genres.map((mg, index) => (
+              <div
+                key={index}
+                className="text-red-500 font-bold max-h-[30px] overflow-hidden"
+              >
+                {mg}
+              </div>
             ))}
           </div>
         </div>

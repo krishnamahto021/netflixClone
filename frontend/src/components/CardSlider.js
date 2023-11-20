@@ -9,16 +9,39 @@ const CardSlider = ({ data, title }) => {
     dots: true,
     infinite: true,
     speed: 500,
+    arrows: true,
     slidesToShow: 5,
     slidesToScroll: 1,
-    arrows: true,
+    responsive: [
+      {
+        breakpoint: 1024, // For medium screens (md)
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 768, // For small screens (sm)
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 480, // For extra small screens (xs)
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   return (
     <div className="w-full overflow-hidden">
       <div className="mb-4">{title}</div>
       <Slider {...settings}>
-        {data.map((movie, index) => (
+        {data.map((movie) => (
           <div key={movie.id} >
             <Card movie={movie} />
           </div>
@@ -26,7 +49,7 @@ const CardSlider = ({ data, title }) => {
       </Slider>
 
       {/* Custom styles for positioning slick slider arrow buttons */}
-      <style >{`
+      <style>{`
         .slick-prev {
           left: 0;
           z-index: 1;
