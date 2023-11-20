@@ -1,24 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import CardSlider from "./CardSlider";
 
 const Slider = ({ movies }) => {
-  const getMoviesFromRange = (from, to) => {
+  const getAllMoviesFromRange = (from, to) => {
     return movies.slice(from, to);
   };
   return (
-    <div className="bg-black text-white max-w-full">
-      <CardSlider data={getMoviesFromRange(0, 10)} title="Trending Now" />
-      <CardSlider data={getMoviesFromRange(10, 20)} title="New Releases" />
+    <div className="bg-black text-white max-w-full pt-4">
+      <CardSlider data={getAllMoviesFromRange(0, 10)} title="Trending Now" />
+      <CardSlider data={getAllMoviesFromRange(10, 20)} title="New Releases" />
       <CardSlider
-        data={getMoviesFromRange(20, 30)}
+        data={getAllMoviesFromRange(20, 30)}
         title="Blockbuster Movies"
       />
       <CardSlider
-        data={getMoviesFromRange(30, 40)}
+        data={getAllMoviesFromRange(30, 40)}
         title="Popular on Netflix"
       />
-      <CardSlider data={getMoviesFromRange(40, 50)} title="Action Movies" />
-      <CardSlider data={getMoviesFromRange(50, 60)} title="Epics" />
+      <CardSlider data={getAllMoviesFromRange(40, 50)} title="Action Movies" />
+      <CardSlider data={getAllMoviesFromRange(50, 60)} title="Epics" />
     </div>
   );
 };

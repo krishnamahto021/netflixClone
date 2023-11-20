@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { userSelector } from "./redux/reducer/userReducer";
 import NavBar from "./components/NavBar";
 import Player from "./pages/Player";
+import Movies from "./pages/Movies";
 
 export const ProtectedRouteHome = ({ element }) => {
   const { loggedInUser } = useSelector(userSelector);
@@ -29,9 +30,13 @@ export const router = createBrowserRouter([
         element: <ProtectedRouteHome element={<Home />} />,
       },
       {
-        path: "/user/player",
-        element: <ProtectedRouteHome element={<Player />} />,
+        path: "/user/movies",
+        element: <ProtectedRouteHome element={<Movies />} />,
       },
     ],
+  },
+  {
+    path: "/user/player",
+    element: <ProtectedRouteHome element={<Player />} />,
   },
 ]);

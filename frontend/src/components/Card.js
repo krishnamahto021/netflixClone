@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaRegPlayCircle } from "react-icons/fa";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiOutlineDislike } from "react-icons/ai";
@@ -6,6 +7,7 @@ import { MdOutlinePlaylistAdd } from "react-icons/md";
 
 const Card = ({ movie }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const navigate = useNavigate();
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -31,15 +33,17 @@ const Card = ({ movie }) => {
         <div
           className="hoveredContainer absolute w-full h-full   rounded-md top-0  z-40 flex flex-col gap-2 justify-evenly"
           style={{
-            backgroundImage: `url(${movie.image})`,
-            backdropFilter: "blur(10px)",
+            backdropFilter: "blur(5px)",
           }}
         >
           <p className="title text-lg font-semibold text-red-600 text-center  overflow-hidden">
             {movie.name}
           </p>
           <div className="buttonsContainer flex gap-4 items-center justify-evenly text-white text-lg ">
-            <FaRegPlayCircle className="text-2xl  cursor-pointer  hover:scale-150 duration-300" />
+            <FaRegPlayCircle
+              className="text-2xl  cursor-pointer  hover:scale-150 duration-300"
+              onClick={() => navigate("/user/player")}
+            />
             <AiOutlineLike className="text-2xl cursor-pointer hover:scale-150 duration-300" />
             <AiOutlineDislike className="text-2xl cursor-pointer hover:scale-150 duration-300" />
             <MdOutlinePlaylistAdd className="text-2xl cursor-pointer hover:scale-150 duration-300" />

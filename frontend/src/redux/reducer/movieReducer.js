@@ -3,7 +3,7 @@ import axios from "axios";
 const initialState = {
   genres: [],
   genresLoaded: false,
-  trendingMovies: [],
+  moviesArray: [],
 };
 
 const createArrayFromRawData = (resArray, moviesArray, genres) => {
@@ -41,7 +41,8 @@ export const getGenres = createAsyncThunk("netflix/genres", async () => {
   return data.genres;
 });
 
-export const getTrending = createAsyncThunk(
+// to get all movies series and all types
+export const getAllMovies = createAsyncThunk(
   "netflix/trending",
   async ({ type }, thunkApi) => {
     const { genres } = thunkApi.getState().movieReducer;
@@ -50,6 +51,19 @@ export const getTrending = createAsyncThunk(
       genres,
       true
     );
+    return moviesArray;
+  }
+);
+
+export const getMoviesByGenre = createAsyncThunk(
+  "netflix/genre",
+  async ({ type, genre }, thunkApi) => {
+    const { genres } = thunkApi.getState().movieReducer;
+    const moviesArray = await getRawData(
+      `https://api.themoviedb.org/3/discover/${type}?api_key=3d39d6bfe362592e6aa293f01fbcf9b9&with_genres=${genre}`,
+      genres,
+    );
+
     return moviesArray;
   }
 );
@@ -67,10 +81,16 @@ const movieSlice = createSlice({
           genresLoaded: true,
         };
       })
-      .addCase(getTrending.fulfilled, (state, action) => {
+      .addCase(getAllMovies.fulfilled, (state, action) => {
         return {
           ...state,
-          trendingMovies: [...action.payload],
+          moviesArray: [...action.payload],
+        };
+      })
+      .addCase(getMoviesByGenre.fulfilled, (state, action) => {
+        return {
+          ...state,
+          moviesArray: [...action.payload],
         };
       });
   },

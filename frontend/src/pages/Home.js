@@ -2,7 +2,7 @@ import React, { useDebugValue, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getGenres,
-  getTrending,
+  getAllMovies,
   movieSelector,
 } from "../redux/reducer/movieReducer";
 import homeImage from "../assets/home.jpg";
@@ -14,14 +14,14 @@ import Slider from "../components/Slider";
 const Home = () => {
   const dispatch = useDispatch();
 
-  const { genresLoaded, trendingMovies } = useSelector(movieSelector);
+  const { genresLoaded, moviesArray, genres } = useSelector(movieSelector);
 
   useEffect(() => {
     dispatch(getGenres());
   }, []);
   useEffect(() => {
     if (genresLoaded) {
-      dispatch(getTrending({ type: "all" }));
+      dispatch(getAllMovies({ genres, type: "all" }));
     }
   }, [genresLoaded]);
   return (
@@ -46,7 +46,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <Slider movies={trendingMovies} />
+      <Slider movies={moviesArray} />
     </>
   );
 };
