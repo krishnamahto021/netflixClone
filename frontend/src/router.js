@@ -46,7 +46,7 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: "/user/player",
+    path: "/user/player/:id/:type",
     element: <ProtectedRouteHome element={<Player />} />,
   },
 ]);

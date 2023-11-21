@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { movieSelector } from "../redux/reducer/movieReducer";
 import CardSlider from "../components/CardSlider";

@@ -104,7 +104,7 @@ const Card = ({ movie }) => {
           <div className="buttonsContainer flex gap-4 items-center justify-evenly text-white text-lg ">
             <FaRegPlayCircle
               className="text-2xl  cursor-pointer  hover:scale-150 duration-300"
-              onClick={() => navigate("/user/player")}
+              onClick={() => navigate(`/user/player/${movie.id}/${movie.type}`)}
             />
             <AiOutlineLike
               className="text-2xl cursor-pointer hover:scale-150 duration-300"

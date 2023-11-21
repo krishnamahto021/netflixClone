@@ -16,12 +16,12 @@ const createArrayFromRawData = (resArray, moviesArray, genres) => {
       const name = genres.find(({ id }) => id === genre);
       if (name) movieGenres.push(name.name);
     });
-
     if (movie.backdrop_path) {
       moviesArray.push({
         id: movie.id,
         name: movie?.name ? movie.name : movie.title,
         image: movie.backdrop_path,
+        type: movie.media_type,
         genres: movieGenres.slice(0, 3),
       });
     }

@@ -24,7 +24,6 @@ const Home = () => {
   const fetchAll = async () => {
     const email = loggedInUser.email;
     const { data } = await axios.post("/user/fetchAll", { email });
-    console.log(data);
     const { likedMovies, favoriteMovies, disLikedMovies } = data;
     dispatch(
       setInitialStatesOfMovies({ likedMovies, favoriteMovies, disLikedMovies })
@@ -51,7 +50,7 @@ const Home = () => {
             <img src={homeTitle} alt="homeTitle"></img>
           </div>
           <div className="buttonsContainer m-2 text-lg  flex gap-4 items-center">
-            <Link to="/user/player">
+            <Link to="/user/player/66732/tv">
               <button className="playButton flex bg-gray-200 text-black rounded-md p-2 items-center gap-2 justify-between">
                 <FaPlay /> Play
               </button>
