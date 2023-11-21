@@ -8,6 +8,7 @@ import NavBar from "./components/NavBar";
 import Player from "./pages/Player";
 import Movies from "./pages/Movies";
 import TvShows from "./pages/TvShows";
+import MyList from "./pages/MyList";
 
 export const ProtectedRouteHome = ({ element }) => {
   const { loggedInUser } = useSelector(userSelector);
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
       {
         path: "/user/tvShows",
         element: <ProtectedRouteHome element={<TvShows />} />,
+      },
+      {
+        path: "/user/myList",
+        element: <ProtectedRouteHome element={<MyList />} />,
       },
     ],
   },

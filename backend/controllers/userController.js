@@ -81,6 +81,7 @@ module.exports.addToLikedMovies = async (req, res) => {
 
       res.status(201).json({
         message: "Movie added to likedMovies successfully",
+        data: data,
       });
     } else {
       res.status(202).json({
@@ -117,6 +118,7 @@ module.exports.addToDislikedMovies = async (req, res) => {
 
       res.status(201).json({
         message: "Disliked the movie",
+        data: data,
       });
     } else {
       res.status(202).json({
@@ -153,6 +155,7 @@ module.exports.addToFavoriteMovies = async (req, res) => {
 
       res.status(201).json({
         message: "Movie added to Favorite LIst successfully",
+        data: data,
       });
     } else {
       res.status(202).json({
@@ -163,6 +166,30 @@ module.exports.addToFavoriteMovies = async (req, res) => {
     console.error(error);
     res.status(500).json({
       message: "Internal Server Error",
+    });
+  }
+};
+
+module.exports.fetchAll = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (user) {
+      return res.status(200).json({
+        message: "Fetched all",
+        likedMovies: user.likedMovies,
+        favoriteMovies: user.favoriteMovies,
+        disLikedMovies: user.disLikedMovies,
+      });
+    }else{
+      return res.status(201).json({
+        message:"User not found"
+      })
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      message: "internal server error",
     });
   }
 };

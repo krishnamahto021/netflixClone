@@ -34,7 +34,6 @@ const SignUp = () => {
         { email, password },
         config
       );
-      console.log(data.status);
       if (data.status === 200) {
         toast.success("User Already Exists !");
         navigate("/sign-in");

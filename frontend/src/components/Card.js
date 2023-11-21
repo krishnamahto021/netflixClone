@@ -5,14 +5,20 @@ import { AiOutlineLike } from "react-icons/ai";
 import { AiOutlineDislike } from "react-icons/ai";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userSelector } from "../redux/reducer/userReducer";
 import { toast } from "react-toastify";
+import {
+  addToDisLikedMovies,
+  addToFavoriteMovies,
+  addToLikedMovies,
+} from "../redux/reducer/movieReducer";
 
 const Card = ({ movie }) => {
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
   const { loggedInUser } = useSelector(userSelector);
+  const dispatch = useDispatch();
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -30,6 +36,7 @@ const Card = ({ movie }) => {
     if (data.status === 200) {
       toast.success("Already Liked ");
     } else if (data.status === 201) {
+      dispatch(addToLikedMovies(movie));
       toast.success("Added To Liked list");
     } else if (data.status === 202) {
       toast.error("Email not registered");
@@ -46,6 +53,7 @@ const Card = ({ movie }) => {
     if (data.status === 200) {
       toast.success("Already DisLiked ");
     } else if (data.status === 201) {
+      dispatch(addToDisLikedMovies(movie));
       toast.success("Added To DisLiked List");
     } else if (data.status === 202) {
       toast.error("Email not registered");
@@ -62,6 +70,7 @@ const Card = ({ movie }) => {
     if (data.status === 200) {
       toast.success(" Already Added to Favorite list");
     } else if (data.status === 201) {
+      dispatch(addToFavoriteMovies(movie));
       toast.success("Added To Favorite List");
     } else if (data.status === 202) {
       toast.error("Email not registered");
@@ -72,7 +81,7 @@ const Card = ({ movie }) => {
 
   return (
     <div
-      className="slideContainer m-1 relative cursor-pointer "
+      className="slideContainer m-1 relative cursor-pointer"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >

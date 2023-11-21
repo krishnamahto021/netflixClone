@@ -4,6 +4,7 @@ import {
   getGenres,
   getAllMovies,
   movieSelector,
+  setInitialStatesOfMovies,
 } from "../redux/reducer/movieReducer";
 import homeImage from "../assets/home.jpg";
 import homeTitle from "../assets/homeTitle.webp";
@@ -11,13 +12,28 @@ import { FaPlay } from "react-icons/fa";
 import { CiCircleInfo } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import Slider from "../components/Slider";
+import { userSelector } from "../redux/reducer/userReducer";
+import axios from "axios";
 const Home = () => {
   const dispatch = useDispatch();
 
   const { genresLoaded, moviesArray, genres } = useSelector(movieSelector);
+  const { loggedInUser } = useSelector(userSelector);
+
+  // fetch all the liked , disliked, fav movies from db
+  const fetchAll = async () => {
+    const email = loggedInUser.email;
+    const { data } = await axios.post("/user/fetchAll", { email });
+    console.log(data);
+    const { likedMovies, favoriteMovies, disLikedMovies } = data;
+    dispatch(
+      setInitialStatesOfMovies({ likedMovies, favoriteMovies, disLikedMovies })
+    );
+  };
 
   useEffect(() => {
     dispatch(getGenres());
+    fetchAll();
   }, []);
   useEffect(() => {
     if (genresLoaded) {

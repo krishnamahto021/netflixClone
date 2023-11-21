@@ -6,12 +6,13 @@ import "slick-carousel/slick/slick-theme.css";
 
 const CardSlider = ({ data, title }) => {
   const settings = {
-    dots: true,
-    infinite: true,
+    dots: false,
+    infinite: data.length > 5 ? true : false,
     speed: 500,
     arrows: true,
     slidesToShow: 5,
     slidesToScroll: 1,
+
     responsive: [
       {
         breakpoint: 1024, // For medium screens (md)
@@ -37,13 +38,16 @@ const CardSlider = ({ data, title }) => {
     ],
   };
 
+  // Memoized Card component to prevent unnecessary renders
+  const MemoizedCard = React.memo(Card);
+
   return (
-    <div className="w-full overflow-hidden">
+    <div className="w-full overflow-hidden ">
       <div className="mb-4">{title}</div>
       <Slider {...settings}>
         {data.map((movie) => (
-          <div key={movie.id} >
-            <Card movie={movie} />
+          <div key={movie.id}>
+            <MemoizedCard movie={movie} />
           </div>
         ))}
       </Slider>

@@ -9,4 +9,6 @@ router.post("/movies/addToLikedMovies", userController.addToLikedMovies);
 router.post("/movies/addToDisLikedMovies", userController.addToDislikedMovies);
 router.post("/movies/addToFavoriteMovies", userController.addToFavoriteMovies);
 
+router.post("/fetchAll", userController.fetchAll);
+
 module.exports = router;

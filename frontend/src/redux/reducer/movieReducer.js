@@ -4,6 +4,9 @@ const initialState = {
   genres: [],
   genresLoaded: false,
   moviesArray: [],
+  likedMoviesArray: [],
+  disLikedMoviesArray: [],
+  favoriteMoviesArray: [],
 };
 
 const createArrayFromRawData = (resArray, moviesArray, genres) => {
@@ -61,7 +64,7 @@ export const getMoviesByGenre = createAsyncThunk(
     const { genres } = thunkApi.getState().movieReducer;
     const moviesArray = await getRawData(
       `https://api.themoviedb.org/3/discover/${type}?api_key=3d39d6bfe362592e6aa293f01fbcf9b9&with_genres=${genre}`,
-      genres,
+      genres
     );
 
     return moviesArray;
@@ -71,7 +74,34 @@ export const getMoviesByGenre = createAsyncThunk(
 const movieSlice = createSlice({
   name: "movie",
   initialState,
-  reducers: {},
+  reducers: {
+    setInitialStatesOfMovies: (state, action) => {
+      return {
+        ...state,
+        likedMoviesArray: action.payload.likedMovies,
+        disLikedMoviesArray: action.payload.disLikedMovies,
+        favoriteMoviesArray: action.payload.favoriteMovies,
+      };
+    },
+    addToLikedMovies: (state, action) => {
+      return {
+        ...state,
+        likedMoviesArray: [action.payload, ...state.likedMoviesArray],
+      };
+    },
+    addToDisLikedMovies: (state, action) => {
+      return {
+        ...state,
+        disLikedMoviesArray: [action.payload, ...state.disLikedMoviesArray],
+      };
+    },
+    addToFavoriteMovies: (state, action) => {
+      return {
+        ...state,
+        favoriteMoviesArray: [action.payload, ...state.favoriteMoviesArray],
+      };
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getGenres.fulfilled, (state, action) => {
@@ -90,12 +120,17 @@ const movieSlice = createSlice({
       .addCase(getMoviesByGenre.fulfilled, (state, action) => {
         return {
           ...state,
-          moviesArray: [...action.payload],
+          // moviesArray: [...action.payload],
         };
       });
   },
 });
 
 export const movieReducer = movieSlice.reducer;
-
+export const {
+  addToDisLikedMovies,
+  addToFavoriteMovies,
+  addToLikedMovies,
+  setInitialStatesOfMovies,
+} = movieSlice.actions;
 export const movieSelector = (state) => state.movieReducer;
