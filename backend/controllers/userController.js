@@ -5,10 +5,10 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv").config();
 
 module.exports.signUp = async (req, res) => {
-  const {  email, password } = req.body;
+  const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (user) {
-    const { _id,  email, token } = user;
+    const { _id, email, token } = user;
     res.status(200).json({
       message: "User already Exists",
     });
@@ -55,6 +55,114 @@ module.exports.signIn = async (req, res) => {
     console.log(`error in the signinup the user ${error}`);
     res.status(400).json({
       message: "Internal server Error",
+    });
+  }
+};
+
+module.exports.addToLikedMovies = async (req, res) => {
+  try {
+    const { email, data } = req.body;
+    const user = await User.findOne({ email });
+
+    if (user) {
+      // Check if the movie with the given id already exists in the likedMovies array
+      const isMovieAlreadyLiked = user.likedMovies.some(
+        (movie) => movie.id === data.id
+      );
+
+      if (isMovieAlreadyLiked) {
+        return res.status(200).json({
+          message: "Movie already exists in likedMovies",
+        });
+      }
+
+      user.likedMovies = [data, ...user.likedMovies];
+      await user.save();
+
+      res.status(201).json({
+        message: "Movie added to likedMovies successfully",
+      });
+    } else {
+      res.status(202).json({
+        message: "Email not registered!!",
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+};
+
+module.exports.addToDislikedMovies = async (req, res) => {
+  try {
+    const { email, data } = req.body;
+    const user = await User.findOne({ email });
+
+    if (user) {
+      // Check if the movie with the given id already exists in the likedMovies array
+      const isMovieAlreadyDisliked = user.disLikedMovies.some(
+        (movie) => movie.id === data.id
+      );
+
+      if (isMovieAlreadyDisliked) {
+        return res.status(200).json({
+          message: "Movie already Disliked",
+        });
+      }
+
+      user.disLikedMovies = [data, ...user.disLikedMovies];
+      await user.save();
+
+      res.status(201).json({
+        message: "Disliked the movie",
+      });
+    } else {
+      res.status(202).json({
+        message: "Email not registered!!",
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+};
+
+module.exports.addToFavoriteMovies = async (req, res) => {
+  try {
+    const { email, data } = req.body;
+    const user = await User.findOne({ email });
+
+    if (user) {
+      // Check if the movie with the given id already exists in the likedMovies array
+      const isMovieAlreadyLiked = user.favoriteMovies.some(
+        (movie) => movie.id === data.id
+      );
+
+      if (isMovieAlreadyLiked) {
+        return res.status(200).json({
+          message: "Movie already exists in Favorite Movies",
+        });
+      }
+
+      user.favoriteMovies = [data, ...user.favoriteMovies];
+      await user.save();
+
+      res.status(201).json({
+        message: "Movie added to Favorite LIst successfully",
+      });
+    } else {
+      res.status(202).json({
+        message: "Email not registered!!",
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Internal Server Error",
     });
   }
 };

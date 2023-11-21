@@ -7,6 +7,9 @@ const userModel = mongoose.Schema(
     password: { type: String, required: true },
     token: { type: String },
     isVerified: { type: Boolean, default: true },
+    likedMovies: { type: Array },
+    disLikedMovies: { type: Array },
+    favoriteMovies: { type: Array },
   },
   { timestamps: true }
 );

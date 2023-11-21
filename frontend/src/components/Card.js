@@ -4,10 +4,15 @@ import { FaRegPlayCircle } from "react-icons/fa";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiOutlineDislike } from "react-icons/ai";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { userSelector } from "../redux/reducer/userReducer";
+import { toast } from "react-toastify";
 
 const Card = ({ movie }) => {
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
+  const { loggedInUser } = useSelector(userSelector);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -15,6 +20,54 @@ const Card = ({ movie }) => {
 
   const handleMouseLeave = () => {
     setIsHovered(false);
+  };
+
+  const handleLikedMovies = async (movie) => {
+    const data = await axios.post("/user/movies/addToLikedMovies", {
+      data: movie,
+      email: loggedInUser.email,
+    });
+    if (data.status === 200) {
+      toast.success("Already Liked ");
+    } else if (data.status === 201) {
+      toast.success("Added To Liked list");
+    } else if (data.status === 202) {
+      toast.error("Email not registered");
+    } else {
+      toast.error("Internal Server Error");
+    }
+  };
+
+  const handleDisLikedMovies = async (movie) => {
+    const data = await axios.post("/user/movies/addToDisLikedMovies", {
+      data: movie,
+      email: loggedInUser.email,
+    });
+    if (data.status === 200) {
+      toast.success("Already DisLiked ");
+    } else if (data.status === 201) {
+      toast.success("Added To DisLiked List");
+    } else if (data.status === 202) {
+      toast.error("Email not registered");
+    } else {
+      toast.error("Internal Server Error");
+    }
+  };
+
+  const handleAddToFavoriteMovies = async (movie) => {
+    const data = await axios.post("/user/movies/addToFavoriteMovies", {
+      data: movie,
+      email: loggedInUser.email,
+    });
+    if (data.status === 200) {
+      toast.success(" Already Added to Favorite list");
+    } else if (data.status === 201) {
+      toast.success("Added To Favorite List");
+    } else if (data.status === 202) {
+      toast.error("Email not registered");
+    } else {
+      toast.error("Internal Server Error");
+    }
   };
 
   return (
@@ -44,9 +97,18 @@ const Card = ({ movie }) => {
               className="text-2xl  cursor-pointer  hover:scale-150 duration-300"
               onClick={() => navigate("/user/player")}
             />
-            <AiOutlineLike className="text-2xl cursor-pointer hover:scale-150 duration-300" />
-            <AiOutlineDislike className="text-2xl cursor-pointer hover:scale-150 duration-300" />
-            <MdOutlinePlaylistAdd className="text-2xl cursor-pointer hover:scale-150 duration-300" />
+            <AiOutlineLike
+              className="text-2xl cursor-pointer hover:scale-150 duration-300"
+              onClick={() => handleLikedMovies(movie)}
+            />
+            <AiOutlineDislike
+              className="text-2xl cursor-pointer hover:scale-150 duration-300"
+              onClick={() => handleDisLikedMovies(movie)}
+            />
+            <MdOutlinePlaylistAdd
+              className="text-2xl cursor-pointer hover:scale-150 duration-300"
+              onClick={() => handleAddToFavoriteMovies(movie)}
+            />
           </div>
           <div className="flex gap-2 items-center content-evenly ml-3">
             {movie.genres.map((mg, index) => (
