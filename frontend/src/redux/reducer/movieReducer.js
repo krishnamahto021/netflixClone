@@ -7,6 +7,8 @@ const initialState = {
   likedMoviesArray: [],
   disLikedMoviesArray: [],
   favoriteMoviesArray: [],
+  searchResultMoviesArray: [],
+  showSearchComponent: false,
 };
 
 const createArrayFromRawData = (resArray, moviesArray, genres) => {
@@ -128,6 +130,30 @@ const movieSlice = createSlice({
         favoriteMoviesArray: removedFavoriteMovie,
       };
     },
+    performSearch: (state, action) => {
+      const result = !state.showSearchComponent;
+      if (action.payload === "") {
+        return {
+          ...state,
+          showSearchComponent: result,
+        };
+      }
+      const searchResults = state.moviesArray.filter((movie) =>
+        movie.name.toLowerCase().includes(action.payload.toLowerCase())
+      );
+      return {
+        ...state,
+        searchResultMoviesArray: searchResults,
+        showSearchComponent: result,
+      };
+    },
+    showSearchComponent:(state,action)=>{
+      const result = !state.showSearchComponent;
+      return {
+        ...state,
+        showSearchComponent:result
+      }
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -162,5 +188,7 @@ export const {
   removeFromLikedMovies,
   removeFromDisLikedMovies,
   removeFromFavoriteMovies,
+  performSearch,
+  showSearchComponent
 } = movieSlice.actions;
 export const movieSelector = (state) => state.movieReducer;

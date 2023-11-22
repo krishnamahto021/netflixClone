@@ -6,7 +6,6 @@ import CardSlider from "../components/CardSlider";
 const MyList = () => {
   const { likedMoviesArray, disLikedMoviesArray, favoriteMoviesArray } =
     useSelector(movieSelector);
-  console.log(likedMoviesArray, disLikedMoviesArray, favoriteMoviesArray);
   return (
     <div className="bg-black pt-14 min-h-screen lg:h-full w-full">
       <h1 className="text-red-500   text-lg p-3">Liked List</h1>

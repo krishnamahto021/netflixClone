@@ -121,14 +121,14 @@ const Card = ({ movie }) => {
 
   return (
     <div
-      className="slideContainer m-1 relative cursor-pointer " 
+      className="slideContainer m-1 relative cursor-pointer  "
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       <img
         src={`https://image.tmdb.org/t/p/w500${movie.image}`}
         alt="card"
-        className="w-full h-auto"
+        className="w-full h-auto "
       />
 
       {isHovered && (

@@ -14,10 +14,13 @@ import { Link } from "react-router-dom";
 import Slider from "../components/Slider";
 import { userSelector } from "../redux/reducer/userReducer";
 import axios from "axios";
+import { createPortal } from "react-dom";
+import SearchResults from "../components/SearchResults";
 const Home = () => {
   const dispatch = useDispatch();
 
-  const { genresLoaded, moviesArray, genres } = useSelector(movieSelector);
+  const { genresLoaded, moviesArray, genres, showSearchComponent } =
+    useSelector(movieSelector);
   const { loggedInUser } = useSelector(userSelector);
 
   // fetch all the liked , disliked, fav movies from db
@@ -60,6 +63,11 @@ const Home = () => {
             </button> */}
           </div>
         </div>
+        {showSearchComponent &&
+          createPortal(
+            <SearchResults />,
+            document.querySelector(".modalContainer")
+          )}
       </div>
       <Slider movies={moviesArray} />
     </>

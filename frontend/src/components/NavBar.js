@@ -8,15 +8,19 @@ import { FaAlignRight } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
 import { IoMdLogOut } from "react-icons/io";
 import { LuSearch } from "react-icons/lu";
+import { performSearch } from "../redux/reducer/movieReducer";
 
 const NavBar = () => {
   const { loggedInUser } = useSelector(userSelector);
   const [showCross, setShowCross] = useState(false);
   const [searchShow, setSearchShow] = useState(false);
   const dispatch = useDispatch();
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearchFunction = () => {
+    dispatch(performSearch(searchQuery));
     setSearchShow(!searchShow);
+    setSearchQuery("");
   };
 
   return (
@@ -42,7 +46,9 @@ const NavBar = () => {
           <div className="middleContainer flex items-center gap-1 -ml-2 md:hidden">
             <input
               className="search focus:outline-none bg-transparent border-b-2 border-red-500 text-white"
-              placeholder="Type....."
+              placeholder="Type name of show .."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             ></input>
             <div onClick={handleSearchFunction}>
               <LuSearch className="text-red-600 text-xl cursor-pointer" />
@@ -59,7 +65,9 @@ const NavBar = () => {
                 <>
                   <input
                     className="search focus:outline-none bg-transparent border-b-2 border-red-500 text-white"
-                    placeholder="Type....."
+                    placeholder="Type name of show..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
                   ></input>
                   <div onClick={handleSearchFunction}>
                     <LuSearch className="text-red-600 text-xl cursor-pointer" />
