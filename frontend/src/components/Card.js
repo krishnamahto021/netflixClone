@@ -121,7 +121,7 @@ const Card = ({ movie }) => {
 
   return (
     <div
-      className="slideContainer m-1 relative cursor-pointer"
+      className="slideContainer m-1 relative cursor-pointer " 
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -133,12 +133,12 @@ const Card = ({ movie }) => {
 
       {isHovered && (
         <div
-          className="hoveredContainer absolute w-full h-full   rounded-md top-0  z-40 flex flex-col gap-2 justify-evenly"
+          className="hoveredContainer absolute w-full h-full   rounded-md top-0  z-40 flex flex-col  justify-between"
           style={{
             backdropFilter: "blur(5px)",
           }}
         >
-          <p className="title text-lg font-semibold text-red-600 text-center  overflow-hidden">
+          <p className="title text-sm md:text-lg font-bold text-red-600 text-center">
             {movie.name}
           </p>
           <div className="buttonsContainer flex gap-4 items-center justify-evenly text-white text-lg ">
@@ -182,11 +182,11 @@ const Card = ({ movie }) => {
               />
             )}
           </div>
-          <div className="flex gap-2 items-center content-evenly ml-3">
+          <div className="flex items-center justify-evenly gap-4  px-1">
             {movie.genres.map((mg, index) => (
               <div
                 key={index}
-                className="text-red-500 font-bold max-h-[30px] overflow-hidden"
+                className="text-red-500 font-bold text-xs md:text-lg"
               >
                 {mg}
               </div>

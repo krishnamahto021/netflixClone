@@ -6,7 +6,7 @@ const Slider = ({ movies }) => {
     return movies.slice(from, to);
   };
   return (
-    <div className="bg-black text-white max-w-full pt-4">
+    <div className="bg-black text-white max-w-full pt-4 px-2">
       <CardSlider data={getAllMoviesFromRange(0, 10)} title="Trending Now" />
       <CardSlider data={getAllMoviesFromRange(10, 20)} title="New Releases" />
       <CardSlider

@@ -42,7 +42,7 @@ const Home = () => {
   return (
     <>
       <div
-        className="homeContainer  h-screen flex flex-col items-center justify-center bg-cover bg-center text-white"
+        className="homeContainer  h-screen flex flex-col items-center justify-center bg-cover bg-center text-white p-2"
         style={{ backgroundImage: `url(${homeImage})` }}
       >
         <div className="container p-4">
@@ -55,9 +55,9 @@ const Home = () => {
                 <FaPlay /> Play
               </button>
             </Link>
-            <button className="playButton flex bg-gray-500 text-black rounded-md p-2 items-center gap-2 justify-between">
+            {/* <button className="playButton flex bg-gray-500 text-black rounded-md p-2 items-center gap-2 justify-between">
               <CiCircleInfo /> More Info
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

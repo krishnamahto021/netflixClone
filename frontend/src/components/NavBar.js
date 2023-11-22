@@ -79,7 +79,7 @@ const NavBar = () => {
             <>
               <div
                 onClick={() => setShowCross(!showCross)}
-                className="font-semibold text-2xl text-red-600 z-20 md:hidden "
+                className="font-semibold text-2xl text-red-600 z-20 px-2 md:hidden "
               >
                 {showCross ? <ImCross className="text-lg" /> : <FaAlignRight />}
               </div>
