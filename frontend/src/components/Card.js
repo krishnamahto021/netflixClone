@@ -38,7 +38,12 @@ const Card = ({ movie }) => {
     setIsDisliked(disLikedMoviesArray.some((m) => m.id === movie.id));
     setIsFavorite(favoriteMoviesArray.some((m) => m.id === movie.id));
   }, [loggedInUser, movie]);
-  console.log(isDisliked, isFavorite, isLiked);
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${loggedInUser.jwtToken}`,
+    },
+  };
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -49,10 +54,14 @@ const Card = ({ movie }) => {
   };
 
   const handleLikedMovies = async (movie) => {
-    const data = await axios.post("/user/movies/addToLikedMovies", {
-      data: movie,
-      email: loggedInUser.email,
-    });
+    const data = await axios.post(
+      "/user/movies/addToLikedMovies",
+      {
+        data: movie,
+        email: loggedInUser.email,
+      },
+      config
+    );
     if (data.status === 200) {
       dispatch(removeFromLikedMovies(movie));
       toast.success("Removed From Liked list ");
@@ -67,10 +76,14 @@ const Card = ({ movie }) => {
   };
 
   const handleDisLikedMovies = async (movie) => {
-    const data = await axios.post("/user/movies/addToDisLikedMovies", {
-      data: movie,
-      email: loggedInUser.email,
-    });
+    const data = await axios.post(
+      "/user/movies/addToDisLikedMovies",
+      {
+        data: movie,
+        email: loggedInUser.email,
+      },
+      config
+    );
     if (data.status === 200) {
       dispatch(removeFromDisLikedMovies(movie));
       toast.success("Removed From Disliked list");
@@ -85,10 +98,14 @@ const Card = ({ movie }) => {
   };
 
   const handleAddToFavoriteMovies = async (movie) => {
-    const data = await axios.post("/user/movies/addToFavoriteMovies", {
-      data: movie,
-      email: loggedInUser.email,
-    });
+    const data = await axios.post(
+      "/user/movies/addToFavoriteMovies",
+      {
+        data: movie,
+        email: loggedInUser.email,
+      },
+      config
+    );
     if (data.status === 200) {
       dispatch(removeFromFavoriteMovies(movie));
       toast.success(" Removed from Favorite list");
