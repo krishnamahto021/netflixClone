@@ -8,7 +8,7 @@ const MyList = () => {
     useSelector(movieSelector);
   console.log(likedMoviesArray, disLikedMoviesArray, favoriteMoviesArray);
   return (
-    <div className="bg-black pt-14 h-screen lg:h-full w-full">
+    <div className="bg-black pt-14 min-h-screen lg:h-full w-full">
       <h1 className="text-red-500   text-lg p-3">Liked List</h1>
       {likedMoviesArray.length > 0 ? (
         <CardSlider data={likedMoviesArray} />
@@ -20,14 +20,14 @@ const MyList = () => {
       {disLikedMoviesArray.length > 0 ? (
         <CardSlider data={disLikedMoviesArray} />
       ) : (
-        <p className="text-red-500  text-center">No any liked shows</p>
+        <p className="text-red-500  text-center">No any Disliked shows</p>
       )}
       <hr></hr>
       <h1 className="text-red-500   text-lg p-3">Favourite List</h1>
       {favoriteMoviesArray.length > 0 ? (
         <CardSlider data={favoriteMoviesArray} />
       ) : (
-        <p className="text-red-500  text-center">No any liked shows</p>
+        <p className="text-red-500  text-center">No any Favorite shows</p>
       )}
     </div>
   );

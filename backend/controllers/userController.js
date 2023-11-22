@@ -71,18 +71,26 @@ module.exports.addToLikedMovies = async (req, res) => {
       );
 
       if (isMovieAlreadyLiked) {
-        return res.status(200).json({
-          message: "Movie already exists in likedMovies",
+        const existingMovieIndex = user.likedMovies.findIndex(
+          (movie) => movie.id === data.id
+        );
+        if (existingMovieIndex !== -1) {
+          user.likedMovies.splice(existingMovieIndex, 1);
+          await user.save();
+
+          res.status(200).json({
+            message: "Removed from the liked list",
+          });
+        }
+      } else {
+        user.likedMovies = [data, ...user.likedMovies];
+        await user.save();
+
+        res.status(201).json({
+          message: "Movie added to likedMovies successfully",
+          data: data,
         });
       }
-
-      user.likedMovies = [data, ...user.likedMovies];
-      await user.save();
-
-      res.status(201).json({
-        message: "Movie added to likedMovies successfully",
-        data: data,
-      });
     } else {
       res.status(202).json({
         message: "Email not registered!!",
@@ -108,18 +116,26 @@ module.exports.addToDislikedMovies = async (req, res) => {
       );
 
       if (isMovieAlreadyDisliked) {
-        return res.status(200).json({
-          message: "Movie already Disliked",
+        const existingMovieIndex = user.disLikedMovies.findIndex(
+          (movie) => movie.id === data.id
+        );
+        if (existingMovieIndex !== -1) {
+          user.disLikedMovies.splice(existingMovieIndex, 1);
+          await user.save();
+
+          res.status(200).json({
+            message: "Removed from the Disliked list",
+          });
+        }
+      } else {
+        user.disLikedMovies = [data, ...user.disLikedMovies];
+        await user.save();
+
+        res.status(201).json({
+          message: "Disliked the movie",
+          data: data,
         });
       }
-
-      user.disLikedMovies = [data, ...user.disLikedMovies];
-      await user.save();
-
-      res.status(201).json({
-        message: "Disliked the movie",
-        data: data,
-      });
     } else {
       res.status(202).json({
         message: "Email not registered!!",
@@ -140,23 +156,31 @@ module.exports.addToFavoriteMovies = async (req, res) => {
 
     if (user) {
       // Check if the movie with the given id already exists in the likedMovies array
-      const isMovieAlreadyLiked = user.favoriteMovies.some(
+      const isMovieAlreadyFavorite = user.favoriteMovies.some(
         (movie) => movie.id === data.id
       );
 
-      if (isMovieAlreadyLiked) {
-        return res.status(200).json({
-          message: "Movie already exists in Favorite Movies",
+      if (isMovieAlreadyFavorite) {
+        const existingMovieIndex = user.favoriteMovies.findIndex(
+          (movie) => movie.id === data.id
+        );
+        if (existingMovieIndex !== -1) {
+          user.favoriteMovies.splice(existingMovieIndex, 1);
+          await user.save();
+
+          res.status(200).json({
+            message: "Removed from the Disliked list",
+          });
+        }
+      } else {
+        user.favoriteMovies = [data, ...user.favoriteMovies];
+        await user.save();
+
+        res.status(201).json({
+          message: "Movie added to Favorite LIst successfully",
+          data: data,
         });
       }
-
-      user.favoriteMovies = [data, ...user.favoriteMovies];
-      await user.save();
-
-      res.status(201).json({
-        message: "Movie added to Favorite LIst successfully",
-        data: data,
-      });
     } else {
       res.status(202).json({
         message: "Email not registered!!",
@@ -181,10 +205,10 @@ module.exports.fetchAll = async (req, res) => {
         favoriteMovies: user.favoriteMovies,
         disLikedMovies: user.disLikedMovies,
       });
-    }else{
+    } else {
       return res.status(201).json({
-        message:"User not found"
-      })
+        message: "User not found",
+      });
     }
   } catch (error) {
     console.log(error);

@@ -89,6 +89,15 @@ const movieSlice = createSlice({
         likedMoviesArray: [action.payload, ...state.likedMoviesArray],
       };
     },
+    removeFromLikedMovies: (state, action) => {
+      const removedLikedMovie = state.likedMoviesArray.filter(
+        (movie) => movie.id !== action.payload.id
+      );
+      return {
+        ...state,
+        likedMoviesArray: removedLikedMovie,
+      };
+    },
     addToDisLikedMovies: (state, action) => {
       return {
         ...state,
@@ -99,6 +108,24 @@ const movieSlice = createSlice({
       return {
         ...state,
         favoriteMoviesArray: [action.payload, ...state.favoriteMoviesArray],
+      };
+    },
+    removeFromDisLikedMovies: (state, action) => {
+      const removedDislikedMovie = state.disLikedMoviesArray.filter(
+        (movie) => movie.id !== action.payload.id
+      );
+      return {
+        ...state,
+        disLikedMoviesArray: removedDislikedMovie,
+      };
+    },
+    removeFromFavoriteMovies: (state, action) => {
+      const removedFavoriteMovie = state.favoriteMoviesArray.filter(
+        (movie) => movie.id !== action.payload.id
+      );
+      return {
+        ...state,
+        favoriteMoviesArray: removedFavoriteMovie,
       };
     },
   },
@@ -132,5 +159,8 @@ export const {
   addToFavoriteMovies,
   addToLikedMovies,
   setInitialStatesOfMovies,
+  removeFromLikedMovies,
+  removeFromDisLikedMovies,
+  removeFromFavoriteMovies,
 } = movieSlice.actions;
 export const movieSelector = (state) => state.movieReducer;

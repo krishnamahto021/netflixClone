@@ -12,6 +12,9 @@ import {
   addToDisLikedMovies,
   addToFavoriteMovies,
   addToLikedMovies,
+  removeFromDisLikedMovies,
+  removeFromFavoriteMovies,
+  removeFromLikedMovies,
 } from "../redux/reducer/movieReducer";
 
 const Card = ({ movie }) => {
@@ -34,7 +37,8 @@ const Card = ({ movie }) => {
       email: loggedInUser.email,
     });
     if (data.status === 200) {
-      toast.success("Already Liked ");
+      dispatch(removeFromLikedMovies(movie));
+      toast.success("Removed From Liked list ");
     } else if (data.status === 201) {
       dispatch(addToLikedMovies(movie));
       toast.success("Added To Liked list");
@@ -51,7 +55,8 @@ const Card = ({ movie }) => {
       email: loggedInUser.email,
     });
     if (data.status === 200) {
-      toast.success("Already DisLiked ");
+      dispatch(removeFromDisLikedMovies(movie));
+      toast.success("Removed From Disliked list");
     } else if (data.status === 201) {
       dispatch(addToDisLikedMovies(movie));
       toast.success("Added To DisLiked List");
@@ -68,7 +73,8 @@ const Card = ({ movie }) => {
       email: loggedInUser.email,
     });
     if (data.status === 200) {
-      toast.success(" Already Added to Favorite list");
+      dispatch(removeFromFavoriteMovies(movie));
+      toast.success(" Removed from Favorite list");
     } else if (data.status === 201) {
       dispatch(addToFavoriteMovies(movie));
       toast.success("Added To Favorite List");
