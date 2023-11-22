@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaRegPlayCircle } from "react-icons/fa";
 import { AiOutlineLike } from "react-icons/ai";
+import { AiFillLike } from "react-icons/ai";
 import { AiOutlineDislike } from "react-icons/ai";
+import { AiFillDislike } from "react-icons/ai";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
+import { MdOutlinePlaylistAddCheck } from "react-icons/md";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { userSelector } from "../redux/reducer/userReducer";
@@ -12,6 +15,7 @@ import {
   addToDisLikedMovies,
   addToFavoriteMovies,
   addToLikedMovies,
+  movieSelector,
   removeFromDisLikedMovies,
   removeFromFavoriteMovies,
   removeFromLikedMovies,
@@ -21,7 +25,20 @@ const Card = ({ movie }) => {
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
   const { loggedInUser } = useSelector(userSelector);
+  const { likedMoviesArray, disLikedMoviesArray, favoriteMoviesArray } =
+    useSelector(movieSelector);
   const dispatch = useDispatch();
+
+  const [isLiked, setIsLiked] = useState(false);
+  const [isDisliked, setIsDisliked] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    setIsLiked(likedMoviesArray.some((m) => m.id === movie.id));
+    setIsDisliked(disLikedMoviesArray.some((m) => m.id === movie.id));
+    setIsFavorite(favoriteMoviesArray.some((m) => m.id === movie.id));
+  }, [loggedInUser, movie]);
+  console.log(isDisliked, isFavorite, isLiked);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -112,18 +129,41 @@ const Card = ({ movie }) => {
               className="text-2xl  cursor-pointer  hover:scale-150 duration-300"
               onClick={() => navigate(`/user/player/${movie.id}/${movie.type}`)}
             />
-            <AiOutlineLike
-              className="text-2xl cursor-pointer hover:scale-150 duration-300"
-              onClick={() => handleLikedMovies(movie)}
-            />
-            <AiOutlineDislike
-              className="text-2xl cursor-pointer hover:scale-150 duration-300"
-              onClick={() => handleDisLikedMovies(movie)}
-            />
-            <MdOutlinePlaylistAdd
-              className="text-2xl cursor-pointer hover:scale-150 duration-300"
-              onClick={() => handleAddToFavoriteMovies(movie)}
-            />
+            {!isLiked ? (
+              <AiOutlineLike
+                className="text-2xl cursor-pointer hover:scale-150 duration-300"
+                onClick={() => handleLikedMovies(movie)}
+              />
+            ) : (
+              <AiFillLike
+                className="text-2xl cursor-pointer hover:scale-150 duration-300"
+                onClick={() => handleLikedMovies(movie)}
+              />
+            )}
+
+            {!isDisliked ? (
+              <AiOutlineDislike
+                className="text-2xl cursor-pointer hover:scale-150 duration-300"
+                onClick={() => handleDisLikedMovies(movie)}
+              />
+            ) : (
+              <AiFillDislike
+                className="text-2xl cursor-pointer hover:scale-150 duration-300"
+                onClick={() => handleDisLikedMovies(movie)}
+              />
+            )}
+
+            {!isFavorite ? (
+              <MdOutlinePlaylistAdd
+                className="text-2xl cursor-pointer hover:scale-150 duration-300"
+                onClick={() => handleAddToFavoriteMovies(movie)}
+              />
+            ) : (
+              <MdOutlinePlaylistAddCheck
+                className="text-2xl cursor-pointer hover:scale-150 duration-300"
+                onClick={() => handleAddToFavoriteMovies(movie)}
+              />
+            )}
           </div>
           <div className="flex gap-2 items-center content-evenly ml-3">
             {movie.genres.map((mg, index) => (
