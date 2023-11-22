@@ -4,13 +4,16 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./router";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
+import MyErrorBoundary from "./components/ErrorBoundary";
 
 function App() {
   return (
     <>
       <Provider store={store}>
         <ToastContainer />
-        <RouterProvider router={router} />
+        <MyErrorBoundary>
+          <RouterProvider router={router} />
+        </MyErrorBoundary>
       </Provider>
     </>
   );

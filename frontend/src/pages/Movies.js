@@ -17,10 +17,9 @@ const Movies = () => {
     dispatch(getGenres());
   }, []);
 
-
   useEffect(() => {
     if (genresLoaded) {
-      dispatch(getAllMovies({genres, type: "movie" }));
+      dispatch(getAllMovies({ genres, type: "movie" }));
     }
   }, [genresLoaded]);
   return (
