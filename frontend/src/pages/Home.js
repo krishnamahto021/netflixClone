@@ -58,9 +58,11 @@ const Home = () => {
                 <FaPlay /> Play
               </button>
             </Link>
-            {/* <button className="playButton flex bg-gray-500 text-black rounded-md p-2 items-center gap-2 justify-between">
-              <CiCircleInfo /> More Info
-            </button> */}
+            <Link to="/user/details/66732/tv">
+              <button className="playButton flex bg-gray-500 text-black rounded-md p-2 items-center gap-2 justify-between">
+                <CiCircleInfo /> More Info
+              </button>
+            </Link>
           </div>
         </div>
         {showSearchComponent &&
