@@ -154,7 +154,7 @@ const SingleMoviePage = () => {
   let typeOfShow = movieData.release_date ? "movie" : "tv";
 
   return movieData ? (
-    <div className="movieDataContainer  h-screen bg-cover bg-center  flex  flex-col lg:flex-row md:items-center items-center justify-center p-2 bg-gradient-to-tr from-gray-400 to-gray-700">
+    <div className="movieDataContainer  min-h-screen bg-cover bg-center  flex  flex-col lg:flex-row md:items-center items-center justify-center p-2 pt-9 bg-gradient-to-tr from-gray-400 to-gray-700">
       <div className="imageContainer w-[90vw] lg:w-[30vw] rounded p-2 ">
         <img
           src={`https://image.tmdb.org/t/p/w500${movieData.backdrop_path}`}
@@ -210,7 +210,7 @@ const SingleMoviePage = () => {
             {movieData.overview}
           </p>
         </div>
-        <div className="buttonsContainer mt-3 py-3  flex gap-1  items-center justify-evenly text-[#EEEEEE] text-xl md:text-2xl lg:text-3xl max-w-[30vw] ">
+        <div className="buttonsContainer mt-3 py-3  flex gap-1  items-center justify-evenly text-[#EEEEEE] text-2xl md:text-2xl lg:text-3xl max-w-[30vw] ">
           <FaRegPlayCircle
             className=" cursor-pointer hover:scale-150 duration-300 bg-[#2b2d42] rounded-full p-1"
             onClick={() => navigate(`/user/player/${movie.id}/${typeOfShow}`)}
