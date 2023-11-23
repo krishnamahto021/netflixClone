@@ -165,7 +165,9 @@ const SingleMoviePage = () => {
       <div className="infoContainer w-[80vw] flex flex-col p-1 gap-2">
         <div className="titleAndDateContainer flex items-center gap-2">
           <p className="text-lg hover:scale-105 duration-200 font-bold cursor-pointer">
-            {movieData.original_title}
+            {movieData.original_title
+              ? movieData.original_title
+              : movieData.name}
           </p>
           <p>
             (
@@ -179,13 +181,20 @@ const SingleMoviePage = () => {
           <div className="bg-transparent border-slate-50 border p-1 rounded text-black font-bold">
             U/A{movieData.adult ? <span>18+</span> : <span>16+</span>}
           </div>
-          <div className="genresContainer flex items-center gap-1 ">
+          <div className="genresContainer md:flex items-center gap-1 hidden">
             {movieData.genres.map((mg) => (
               <p key={mg.id} className="">
                 {mg.name}
               </p>
             ))}
           </div>
+        </div>
+        <div className="genresContainer grid grid-cols-1 md:hidden">
+          {movieData.genres.map((mg) => (
+            <p key={mg.id} className="">
+              {mg.name}
+            </p>
+          ))}
         </div>
         <div className="taglineContainer">
           <p className="text-gray-400 ">{movieData.tagline}</p>
