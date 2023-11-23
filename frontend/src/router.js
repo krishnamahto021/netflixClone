@@ -9,6 +9,7 @@ import Player from "./pages/Player";
 import Movies from "./pages/Movies";
 import TvShows from "./pages/TvShows";
 import MyList from "./pages/MyList";
+import SingleMoviePage from "./pages/SingleMoviePage";
 
 export const ProtectedRouteHome = ({ element }) => {
   const { loggedInUser } = useSelector(userSelector);
@@ -42,6 +43,10 @@ export const router = createBrowserRouter([
       {
         path: "/user/myList",
         element: <ProtectedRouteHome element={<MyList />} />,
+      },
+      {
+        path: "/user/details/:id/:type",
+        element: <ProtectedRouteHome element={<SingleMoviePage />} />,
       },
     ],
   },

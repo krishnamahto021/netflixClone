@@ -11,6 +11,7 @@ import {
   MdOutlinePlaylistAdd,
   MdOutlinePlaylistAddCheck,
 } from "react-icons/md";
+import { CgMoreO } from "react-icons/cg";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { userSelector } from "../redux/reducer/userReducer";
@@ -149,46 +150,52 @@ const Card = ({ movie }) => {
           >
             {movie.name}
           </p>
-          <div className="buttonsContainer flex gap-4 items-center justify-evenly text-black text-lg ">
+          <div className="buttonsContainer flex gap-1 md:gap-2 lg:gap-3 items-center justify-evenly text-[#EEEEEE] text-xl md:text-2xl lg:text-3xl ">
             <FaRegPlayCircle
-              className="text-2xl cursor-pointer hover:scale-150 duration-300"
+              className=" cursor-pointer hover:scale-150 duration-300 bg-[#2b2d42] rounded-full p-1"
               onClick={() => navigate(`/user/player/${movie.id}/${movie.type}`)}
             />
             {!isLiked ? (
               <AiOutlineLike
-                className="text-2xl cursor-pointer hover:scale-150 duration-300"
+                className=" p-1 cursor-pointer hover:scale-150 duration-300 bg-[#2b2d42] rounded-full"
                 onClick={() => handleLikedMovies(movie)}
               />
             ) : (
               <AiFillLike
-                className="text-2xl cursor-pointer text-red-500 hover:scale-150 duration-300"
+                className=" p-1 cursor-pointer text-red-500 hover:scale-150 duration-300 bg-[#2b2d42] rounded-full"
                 onClick={() => handleLikedMovies(movie)}
               />
             )}
 
             {!isDisliked ? (
               <AiOutlineDislike
-                className="text-2xl cursor-pointer hover:scale-150 duration-300"
+                className=" p-1 cursor-pointer hover:scale-150 duration-300 bg-[#2b2d42] rounded-full"
                 onClick={() => handleDisLikedMovies(movie)}
               />
             ) : (
               <AiFillDislike
-                className="text-2xl cursor-pointer text-red-500 hover:scale-150 duration-300"
+                className=" p-1 cursor-pointer text-red-500 hover:scale-150 duration-300 bg-[#2b2d42] rounded-full"
                 onClick={() => handleDisLikedMovies(movie)}
               />
             )}
 
             {!isFavorite ? (
               <MdOutlinePlaylistAdd
-                className="text-2xl cursor-pointer  hover:scale-150 duration-300"
+                className=" p-1 cursor-pointer  hover:scale-150 duration-300 bg-[#2b2d42] rounded-full"
                 onClick={() => handleAddToFavoriteMovies(movie)}
               />
             ) : (
               <MdOutlinePlaylistAddCheck
-                className="text-2xl cursor-pointer text-red-500 hover:scale-150 duration-300"
+                className=" p-1 cursor-pointer text-red-500 hover:scale-150 duration-300 bg-[#2b2d42] rounded-full"
                 onClick={() => handleAddToFavoriteMovies(movie)}
               />
             )}
+            <CgMoreO
+              className=" p-1 cursor-pointer  hover:scale-150 duration-300 bg-[#2b2d42] rounded-full"
+              onClick={() =>
+                navigate(`/user/details/${movie.id}/${movie.type}`)
+              }
+            />
           </div>
           <div className="genresContainer flex items-center  justify-between px-1 ">
             {movie.genres.slice(0, 2).map((mg, index) => (
