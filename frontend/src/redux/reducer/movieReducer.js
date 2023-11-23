@@ -131,29 +131,44 @@ const movieSlice = createSlice({
       };
     },
     performSearch: (state, action) => {
-      const result = !state.showSearchComponent;
+      const termToBeSearched = action.payload.replace(/\s/g, "").toLowerCase();
       if (action.payload === "") {
         return {
           ...state,
-          showSearchComponent: result,
+          searchResultMoviesArray: [], // Clear the search results when the search term is empty
         };
       }
-      const searchResults = state.moviesArray.filter((movie) =>
-        movie.name.toLowerCase().includes(action.payload.toLowerCase())
-      );
+
+      const searchResults = state.moviesArray.filter((movie) => {
+        const searchTermChars = Array.from(termToBeSearched);
+        const movieNameChars = Array.from(movie.name.toLowerCase());
+
+        let i = 0;
+        let j = 0;
+
+        while (i < searchTermChars.length && j < movieNameChars.length) {
+          if (searchTermChars[i] === movieNameChars[j]) {
+            i++;
+          }
+          j++;
+        }
+
+        return i === searchTermChars.length; // Check if all characters in the search term are found in order
+      });
+
       return {
         ...state,
         searchResultMoviesArray: searchResults,
-        showSearchComponent: result,
       };
     },
-    showSearchComponent:(state,action)=>{
+
+    setShowSearchComponent: (state, action) => {
       const result = !state.showSearchComponent;
       return {
         ...state,
-        showSearchComponent:result
-      }
-    }
+        showSearchComponent: result,
+      };
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -189,6 +204,6 @@ export const {
   removeFromDisLikedMovies,
   removeFromFavoriteMovies,
   performSearch,
-  showSearchComponent
+  setShowSearchComponent,
 } = movieSlice.actions;
 export const movieSelector = (state) => state.movieReducer;

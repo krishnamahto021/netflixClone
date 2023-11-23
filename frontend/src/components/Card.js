@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaRegPlayCircle } from "react-icons/fa";
-import { AiOutlineLike } from "react-icons/ai";
-import { AiFillLike } from "react-icons/ai";
-import { AiOutlineDislike } from "react-icons/ai";
-import { AiFillDislike } from "react-icons/ai";
-import { MdOutlinePlaylistAdd } from "react-icons/md";
-import { MdOutlinePlaylistAddCheck } from "react-icons/md";
+import {
+  AiOutlineLike,
+  AiFillLike,
+  AiOutlineDislike,
+  AiFillDislike,
+} from "react-icons/ai";
+import {
+  MdOutlinePlaylistAdd,
+  MdOutlinePlaylistAddCheck,
+} from "react-icons/md";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { userSelector } from "../redux/reducer/userReducer";
@@ -38,6 +42,7 @@ const Card = ({ movie }) => {
     setIsDisliked(disLikedMoviesArray.some((m) => m.id === movie.id));
     setIsFavorite(favoriteMoviesArray.some((m) => m.id === movie.id));
   }, [loggedInUser, movie]);
+
   const config = {
     headers: {
       "Content-type": "application/json",
@@ -121,29 +126,32 @@ const Card = ({ movie }) => {
 
   return (
     <div
-      className="slideContainer m-1 relative cursor-pointer  "
+      className="slideContainer m-1 relative cursor-pointer "
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       <img
         src={`https://image.tmdb.org/t/p/w500${movie.image}`}
         alt="card"
-        className="w-full h-auto "
+        className="w-full h-auto"
       />
 
       {isHovered && (
         <div
-          className="hoveredContainer absolute w-full h-full   rounded-md top-0  z-40 flex flex-col  justify-between"
+          className="hoveredContainer absolute w-full h-full rounded-md top-0 z-40 flex flex-col justify-evenly"
           style={{
-            backdropFilter: "blur(5px)",
+            backdropFilter: "blur(0.75px)",
           }}
         >
-          <p className="title text-sm md:text-lg font-bold text-red-600 text-center">
+          <p
+            className="title text-[12px] sm:text-xs md:leading-4 xl:text-lg font-bold text-red-600 text-center"
+            title={movie.name}
+          >
             {movie.name}
           </p>
-          <div className="buttonsContainer flex gap-4 items-center justify-evenly text-white text-lg ">
+          <div className="buttonsContainer flex gap-4 items-center justify-evenly text-black text-lg ">
             <FaRegPlayCircle
-              className="text-2xl  cursor-pointer  hover:scale-150 duration-300"
+              className="text-2xl cursor-pointer hover:scale-150 duration-300"
               onClick={() => navigate(`/user/player/${movie.id}/${movie.type}`)}
             />
             {!isLiked ? (
@@ -153,7 +161,7 @@ const Card = ({ movie }) => {
               />
             ) : (
               <AiFillLike
-                className="text-2xl cursor-pointer hover:scale-150 duration-300"
+                className="text-2xl cursor-pointer text-red-500 hover:scale-150 duration-300"
                 onClick={() => handleLikedMovies(movie)}
               />
             )}
@@ -165,28 +173,29 @@ const Card = ({ movie }) => {
               />
             ) : (
               <AiFillDislike
-                className="text-2xl cursor-pointer hover:scale-150 duration-300"
+                className="text-2xl cursor-pointer text-red-500 hover:scale-150 duration-300"
                 onClick={() => handleDisLikedMovies(movie)}
               />
             )}
 
             {!isFavorite ? (
               <MdOutlinePlaylistAdd
-                className="text-2xl cursor-pointer hover:scale-150 duration-300"
+                className="text-2xl cursor-pointer  hover:scale-150 duration-300"
                 onClick={() => handleAddToFavoriteMovies(movie)}
               />
             ) : (
               <MdOutlinePlaylistAddCheck
-                className="text-2xl cursor-pointer hover:scale-150 duration-300"
+                className="text-2xl cursor-pointer text-red-500 hover:scale-150 duration-300"
                 onClick={() => handleAddToFavoriteMovies(movie)}
               />
             )}
           </div>
-          <div className="flex items-center justify-evenly gap-4  px-1">
-            {movie.genres.map((mg, index) => (
+          <div className="genresContainer flex items-center  justify-between px-1 ">
+            {movie.genres.slice(0, 2).map((mg, index) => (
               <div
                 key={index}
-                className="text-red-500 font-bold text-xs md:text-lg"
+                className="text-red-500 text-[12px] sm:text-xs md:leading-4 xl:text-lg font-semibold"
+                title={mg}
               >
                 {mg}
               </div>

@@ -8,7 +8,10 @@ import { FaAlignRight } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
 import { IoMdLogOut } from "react-icons/io";
 import { LuSearch } from "react-icons/lu";
-import { performSearch } from "../redux/reducer/movieReducer";
+import {
+  performSearch,
+  setShowSearchComponent,
+} from "../redux/reducer/movieReducer";
 
 const NavBar = () => {
   const { loggedInUser } = useSelector(userSelector);
@@ -20,6 +23,7 @@ const NavBar = () => {
   const handleSearchFunction = () => {
     dispatch(performSearch(searchQuery));
     setSearchShow(!searchShow);
+    dispatch(setShowSearchComponent());
     setSearchQuery("");
   };
 
@@ -43,7 +47,7 @@ const NavBar = () => {
         </div>
 
         {loggedInUser.jwtToken ? (
-          <div className="middleContainer flex items-center gap-1 -ml-2 md:hidden">
+          <div className="middleContainer p-4 flex items-center gap-1 -ml-2 md:hidden">
             <input
               className="search focus:outline-none bg-transparent border-b-2 border-red-500 text-white"
               placeholder="Type name of show .."
