@@ -188,7 +188,7 @@ const movieSlice = createSlice({
       .addCase(getMoviesByGenre.fulfilled, (state, action) => {
         return {
           ...state,
-          // moviesArray: [...action.payload],
+          moviesArray: [...action.payload],
         };
       });
   },
